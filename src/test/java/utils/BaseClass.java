@@ -26,7 +26,7 @@ public class BaseClass {
         String url=pro.getProperty("url");
         log.info("entering the url........");
         driver.get(url);
-        driver.manage().window().maximize();
+    //    driver.manage().window().maximize();
 
     }
 

@@ -3,7 +3,7 @@ Feature: Login to your account
   Background:
     Given Navigate to home page
     When user click on signUp and login link
-    Then page should navigate to sign Up page
+    Then page should navigate to log in page
 @smoke
   Scenario: Valid User login
     When enter username as "qatester@abc.com"
@@ -13,7 +13,7 @@ Feature: Login to your account
 
 
 @smoke
-  Scenario Outline: Login feature test using valid and invalid credentials
+  Scenario Outline: Login using valid and invalid credentials
     When enter username as "<username>"
     And enter password as "<password>"
     And click on login button
@@ -43,3 +43,17 @@ Feature: Login to your account
       | qatester@abc.com | india |
     And click on login button
     Then page should navigate to user HomePage
+
+    @smoke1
+
+  Scenario: New User Signup
+    When enter signup_name and signup_email Address and click on Signup  button
+      |signup_name|signup_email|
+      |demo       |demo3@abcd.com |
+    Then Page should navigate to sign up Page
+    When Enter Account Information and click on create account Btn
+    Then Page should navigate to account created page
+#  |name|password|first_name|last_name|state|city|zipcode|mobile_no|
+#  |demo_User|1234    |demo1     |demo2    |cbbc |bcjsb|768787|657676
+      #Then Message should display
+
