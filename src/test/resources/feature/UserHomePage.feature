@@ -2,7 +2,7 @@ Feature: Login Page feature Test
   Background:
     Given Navigate to home page
     When user click on signUp and login link
-    Then page should navigate to sign Up page
+    Then page should navigate to sign Up or log in page
     When enter username as "qatester@abc.com"
     And enter password as "india"
     And click on login button
@@ -11,6 +11,6 @@ Feature: Login Page feature Test
     @smoke @regression
     Scenario: Verify user Logged out after clicking logout link
       When click on logout button
-      Then page should navigate to sign Up page
+      Then page should navigate to sign Up or log in page
 
 

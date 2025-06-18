@@ -8,30 +8,20 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.List;
 
+public class OnlySignUpPage {
 
-public class SignUpPage {
-
-    private final WebDriver driver;
+    private WebDriver driver;
     private WebElement element;
-    private final String loginPageTitle = "Automation Exercise - Signup / Login";
     private final String signUpPageTitle="Automation Exercise - Signup";
     private final Logger log= LogManager.getLogger();
-
-    @FindBy(name = "email")
-    private WebElement userNameTextBox;
-
-    @FindBy(name = "password")
-    private WebElement passwordTextBox;
-
-    @FindBy(xpath = "//*[.='Login']")
-    private WebElement loginBtn;
-
-    @FindBy(xpath ="//*[contains(text(),'Your email or password is incorrect!')]") private WebElement errorMsg;
 
     @FindBy(name = "name")
     private WebElement signUpNameTxtBox;
@@ -72,65 +62,36 @@ public class SignUpPage {
 
 
 
-    @FindBy(xpath = "//form[@action='/signup']//button")private WebElement createAccountBtn;
+    @FindBy(xpath = "//form[@action='/signup']//button[text()='Create Account']")private WebElement createAccountBtn;
 
-    public SignUpPage(WebDriver driver) {
-        this.driver = driver;
-        PageFactory.initElements(driver, this);
-
+    public OnlySignUpPage(WebDriver driver){
+        this.driver=driver;
+        PageFactory.initElements(driver,this);
     }
 
-    public void verifyloginPageTitle() {
-        log.info("Verify login page title");
-        Assert.assertEquals(driver.getTitle(), loginPageTitle, "login Page Title not matched");
+    public void enterSignUpName_EmailTxtBox(String name,String email){
+        System.out.println("==============enterSignUpName_EmailTxtBox==========");
+        System.out.println(name);
+        System.out.println(email);
+        signUpNameTxtBox.sendKeys(name);
+        signUpEmailTxtBox.sendKeys(email);
+        signUpBtn.click();
     }
-
     public void verifysignUpPageTitle() {
         log.info("Verify signup page title");
         Assert.assertEquals(driver.getTitle(), signUpPageTitle, "signUp Page Title not matched");
     }
 
-    public void enterUserName(String username) {
-        userNameTextBox.sendKeys(username);
 
-    }
-
-    public void enterPassword(String password) {
-        passwordTextBox.sendKeys(password);
-    }
-
-    public void clickOnLoginBtn() {
-        loginBtn.click();
-    }
-
-    public void verifyErrorMsg(){
-        Assert.assertEquals(errorMsg.getText(),"Your email or password is incorrect!",errorMsg.getText()+" not displayed");
-    }
-
-
-
-    public void enterSignUpName_EmailTxtBox(String name,String email){
-
-        signUpNameTxtBox.sendKeys(name);
-        signUpEmailTxtBox.sendKeys(email);
-        signUpBtn.click();
-    }
-
-  /*  public void enterAccountDetailsNclickonCreateAccountBtn() {
-        System.out.println("==================printing label names============");
-        for (WebElement label : labels) {
-            //  System.out.println(label.getText());
-        }
-    }*/
 
     private String getWebElementAttribute(WebElement element,String atr){
-       return element.getDomAttribute(atr);
+        return element.getDomAttribute(atr);
     }
 
     private WebElement getInputElementUsingForAttribute(WebElement element) {
         String forAtr=getWebElementAttribute(element,"for");
         String idAttribute = String.format("./..//input[@id='%s']", forAtr);
-       // return element.findElement(By.xpath("./.."+idAttribute+""));
+        // return element.findElement(By.xpath("./.."+idAttribute+""));
         return element.findElement(By.xpath(idAttribute));
 
     }
@@ -149,7 +110,7 @@ public class SignUpPage {
         text=text.replaceAll("[^\\w\\s]","");
         System.out.println(text);*/
         return text;
-        }
+    }
     public void assertTitleForMr(){
         String text=getWebElementText(labelMr);
         Assert.assertEquals(text,"Mr.");
@@ -161,10 +122,10 @@ public class SignUpPage {
             TitleMrRadioBtn.click();
         }
     }
-        public void assertTitleForMrs(){
-            String text=getWebElementText(labelMrs);
-            Assert.assertEquals(text,"Mrs.");
-        }
+    public void assertTitleForMrs(){
+        String text=getWebElementText(labelMrs);
+        Assert.assertEquals(text,"Mrs.");
+    }
 
     public void selectMrsTitle() throws Exception {
         WebElement TitleMrsRadioBtn = getInputElementUsingForAttribute(labelMrs);
@@ -335,7 +296,6 @@ public class SignUpPage {
         return validateRequiredTxtBox(cityTxtBox);
     }
     public boolean validateZipcodeTxtBox() {
-        System.out.println("validating zipcode text box");
         WebElement zipcodeTxtBox = zipcodeLabel.findElement(By.xpath("./../input[@id='zipcode']"));;
         return validateRequiredTxtBox(zipcodeTxtBox);
     }
@@ -350,8 +310,8 @@ public class SignUpPage {
             if (getWebElementAttribute(txtElement, "value").isEmpty()) {
                 txtElement.sendKeys(name);
             } else {
-                txtElement.clear();
-                txtElement.sendKeys(name);
+                /*txtElement.clear();
+                txtElement.sendKeys(name);*/
             }
         } else {
             System.out.println(getWebElementAttribute(txtElement,"value"));
@@ -363,9 +323,9 @@ public class SignUpPage {
         enterValueInTxtBox(TxtBoxelement,name);
     }
 
-        public void enterValueInEmailTxtBox(String email)throws Exception{
-            WebElement emailTxtBox = getInputElementUsingForAttribute(emailLabel);
-            enterValueInTxtBox(emailTxtBox,email);
+    public void enterValueInEmailTxtBox(String email)throws Exception{
+        WebElement emailTxtBox = getInputElementUsingForAttribute(emailLabel);
+        enterValueInTxtBox(emailTxtBox,email);
     }
 
     public void enterValueInPasswordTxtBox(String password)throws Exception{
@@ -398,10 +358,10 @@ public class SignUpPage {
     }
 
     public void enterValueInCountryDropDown(String countryName)throws Exception{
-       String countryForAttribute= countryLabel.getAttribute("for");
+        String countryForAttribute= countryLabel.getAttribute("for");
         String idAttribute = String.format("//select[@id='%s']", countryForAttribute);
         WebElement countryDropDown= driver.findElement(By.xpath(idAttribute));
-       // WebElement countryDropDown=countryLabel.findElement(By.xpath("/..//select[@id="+countryForAttribute+""));
+        // WebElement countryDropDown=countryLabel.findElement(By.xpath("/..//select[@id="+countryForAttribute+""));
         if(countryDropDown.isEnabled()){
             new Select(countryDropDown).selectByVisibleText(countryName);
         }
@@ -420,7 +380,6 @@ public class SignUpPage {
 
 
     public void enterValueInZipcodeTxtBox(String zipcode)throws Exception{
-        System.out.println("entering value for zipcode text box");
         WebElement zipcodeTxtBox = zipcodeLabel.findElement(By.xpath("./../input[@id='zipcode']"));
         enterValueInTxtBox(zipcodeTxtBox,zipcode);
     }
@@ -430,27 +389,48 @@ public class SignUpPage {
         enterValueInTxtBox(mobileNoTxtBox,mobileNo);
     }
 
-    public void selectNewsletterChkBox()throws Exception{
+    public void selectNewsletterChkBox(boolean status)throws Exception{
         WebElement newsletterChkBox = getInputElementUsingForAttribute(newsletterLabel);
-        if(newsletterChkBox.isEnabled() && ! newsletterChkBox.isSelected()){
+        if(status==true&&newsletterChkBox.isEnabled() && ! newsletterChkBox.isSelected()){
             newsletterChkBox.click();
         }
-        else
+        else if(status==false&&newsletterChkBox.isEnabled() &&  newsletterChkBox.isSelected())
             newsletterChkBox.click();
     }
 
-    public void selectOptionChkBox()throws Exception{
+    public void selectOptionChkBox(boolean status)throws Exception{
         WebElement optionChkBox = getInputElementUsingForAttribute(optinLabel);
-        if(optionChkBox.isEnabled() && ! optionChkBox.isSelected()){
+        if(status==true&&optionChkBox.isEnabled() && ! optionChkBox.isSelected()){
             optionChkBox.click();
         }
-        else
+        else if(status==false&&optionChkBox.isEnabled() && optionChkBox.isSelected())
             optionChkBox.click();
+    }
+
+    public void enterDOB(String day, String month, String year){
+
+        List<WebElement>dob=DOBLabel.findElements(By.xpath("./..//select"));
+        for(WebElement eachDOB:dob){
+            String idAtr=eachDOB.getDomAttribute("id");
+            if(idAtr.equalsIgnoreCase("days"))
+                new Select(eachDOB).selectByVisibleText(day);
+            else if (idAtr.equalsIgnoreCase("months")) {
+                new Select(eachDOB).selectByVisibleText(month);
+            } else if (idAtr.equalsIgnoreCase("years")) {
+                new Select(eachDOB).selectByVisibleText(year);
+            }
+        }
     }
 
     public void clickOnCreateAccountBtn(){
+        WebDriverWait wait=new WebDriverWait(driver, Duration.ofSeconds(5));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", createAccountBtn);
+        wait.until(ExpectedConditions.elementToBeClickable(createAccountBtn));
+        Assert.assertEquals(createAccountBtn.getText(),"Create Account");
+        //  if(createAccountBtn.isEnabled())
         createAccountBtn.click();
+        //  else System.out.println("button is disabled");
     }
+
 
 }

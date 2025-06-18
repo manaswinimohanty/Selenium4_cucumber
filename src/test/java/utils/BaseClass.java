@@ -1,8 +1,10 @@
 package utils;
 
+import factories.UserFactories;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.WebDriver;
+import pojo.Users;
 
 import java.io.FileInputStream;
 import java.io.FileReader;
@@ -12,7 +14,7 @@ import java.util.Properties;
 public class BaseClass {
     public static final String propertyFilePath=System.getProperty("user.dir")+"/src/test/resources/SetUp.properties";
     private Logger log;
-
+   // protected static Users users = UserFactories.createDefault();
     protected WebDriver driver=BrowserFactory.getDriverInstance();
 
     public void openUrl(WebDriver driver){

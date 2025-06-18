@@ -4,4 +4,4 @@ Feature: HomePage Functionality
     Given Navigate to home page
     Then Signup and login link should be displayed
     When user click on signUp and login link
-    Then page should navigate to sign Up page
+    Then page should navigate to sign Up or log in page
