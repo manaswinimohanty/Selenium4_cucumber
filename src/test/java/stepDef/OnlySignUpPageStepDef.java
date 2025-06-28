@@ -3,21 +3,23 @@ package stepDef;
 import factories.UserFactories;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
 import pageObject.OnlySignUpPage;
 import pojo.Users;
 import utils.BaseClass;
+import utils.ScenarioContext;
 
 public class OnlySignUpPageStepDef extends BaseClass {
-    Users users= UserFactories.createDefault();
-    private final OnlySignUpPage sign=new OnlySignUpPage(driver);
+   // Users users= UserFactories.createDefault();
+    private final OnlySignUpPage sign;
+     private ScenarioContext context;
+    private Users users;
 
-    @When("enter signup_name and signup_email Address and click on Signup  button")
-    public void enterNameAndEmailAddressAndClickOnSignupButton() {
-        sign.enterSignUpName_EmailTxtBox(users.getUserName(),users.getEmail());
 
+   public OnlySignUpPageStepDef(ScenarioContext context){
+        this.context=context;
+        sign=new OnlySignUpPage(driver);
+       users=ScenarioContext.getUsers();
     }
-
 
     @Then("Page should navigate to sign up Page")
     public void pageShouldNavigateToSignUpPage() {
@@ -27,7 +29,7 @@ public class OnlySignUpPageStepDef extends BaseClass {
     @And("Enter Account Information")
     public void enterAccountInformation() {
         //List<Map<String,String>>mapList=user.asMaps(String.class,String.class);
-
+        Users Users=ScenarioContext.getUsers();
         try {
             System.out.println("==============inside only signup page==========");
             System.out.println(users.getUserName());

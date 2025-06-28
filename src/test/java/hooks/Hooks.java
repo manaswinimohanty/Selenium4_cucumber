@@ -1,5 +1,6 @@
 package hooks;
 
+import api.RegistrationApiClient;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -13,11 +14,24 @@ public class Hooks {
     Logger log= LogManager.getLogger();
     public Scenario sc;
 
+    private RegistrationApiClient registrationApiClient; // Injected by PicoContainer
+
+    // Constructor for PicoContainer injection
+    public Hooks(RegistrationApiClient registrationApiClient) {
+        System.out.println("inside hooks constructor====");
+        this.registrationApiClient = registrationApiClient;
+    }
+
     @Before
     public void beforeScenario(Scenario sc) {
 
         log.info("launching the browser...........");
         BrowserFactory.browserSetUp();
+    }
+    @Before("@apiRegistration")
+        public void registerUserApiPrecondition(Scenario sc) {
+        System.out.println("inside before @apiRegistratio====");
+        registrationApiClient.registerNewUser();
     }
 
     @After(order = 1)

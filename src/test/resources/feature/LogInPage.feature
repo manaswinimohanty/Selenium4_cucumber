@@ -44,8 +44,8 @@ Feature: Login to your account
     And click on login button
     Then page should navigate to user HomePage
 
-#    @smoke1
-#
+    @smoke1
+
 #  Scenario: New User Signup
 #    When enter signup_name and signup_email Address and click on Signup  button
 #      |signup_name|signup_email|
@@ -54,6 +54,15 @@ Feature: Login to your account
 #    When Enter Account Information and click on create account Btn
 #    Then Page should navigate to account created page
 
+    @smoke1
 
+    Scenario: Successful user signup with valid credentials
+      When log in with the credentials used during signup
+      Then page should navigate to user HomePage
 
-
+  @apiRegistration
+  Scenario: Successful registration via API and login via UI
+    Given a new user is registered via API
+    When I enter the registered username and password
+    And click on login button
+   Then page should navigate to user HomePage

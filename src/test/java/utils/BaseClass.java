@@ -16,6 +16,7 @@ public class BaseClass {
     private Logger log;
    // protected static Users users = UserFactories.createDefault();
     protected WebDriver driver=BrowserFactory.getDriverInstance();
+    //testContextSetUp
 
     public void openUrl(WebDriver driver){
         log= LogManager.getLogger();

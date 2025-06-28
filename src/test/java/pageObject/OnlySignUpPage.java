@@ -23,15 +23,7 @@ public class OnlySignUpPage {
     private final String signUpPageTitle="Automation Exercise - Signup";
     private final Logger log= LogManager.getLogger();
 
-    @FindBy(name = "name")
-    private WebElement signUpNameTxtBox;
-
-    @FindBy(xpath = "//form[@action='/signup']//input[@name='email']")
-    private WebElement signUpEmailTxtBox;
-
-    @FindBy(xpath = "//*[text()='Signup']") private WebElement signUpBtn;
-
-    @FindBy(xpath="//form//label[@for]") private List<WebElement> labels;
+        @FindBy(xpath="//form//label[@for]") private List<WebElement> labels;
 
     @FindBy(xpath = "//label[text()='Title']//following-sibling::div//label[@for='id_gender1']") private WebElement labelMr;
 
@@ -69,14 +61,7 @@ public class OnlySignUpPage {
         PageFactory.initElements(driver,this);
     }
 
-    public void enterSignUpName_EmailTxtBox(String name,String email){
-        System.out.println("==============enterSignUpName_EmailTxtBox==========");
-        System.out.println(name);
-        System.out.println(email);
-        signUpNameTxtBox.sendKeys(name);
-        signUpEmailTxtBox.sendKeys(email);
-        signUpBtn.click();
-    }
+
     public void verifysignUpPageTitle() {
         log.info("Verify signup page title");
         Assert.assertEquals(driver.getTitle(), signUpPageTitle, "signUp Page Title not matched");

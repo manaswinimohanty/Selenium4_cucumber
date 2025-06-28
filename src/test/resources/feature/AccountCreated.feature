@@ -10,7 +10,7 @@ Feature: Account created page Validation
     And click on create account Btn
 
 
-@smoke1
+@smoke
     Scenario: Verify Account created page afters a new user account is created successfully.
       Then Page should navigate to account created page
       When click on continue button

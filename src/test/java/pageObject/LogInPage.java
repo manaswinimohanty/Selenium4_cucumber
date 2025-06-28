@@ -14,11 +14,18 @@ public class LogInPage {
     private WebDriver driver;
     private WebElement element;
     private final String loginPageTitle = "Automation Exercise - Signup / Login";
-    private final String signUpPageTitle="Automation Exercise - Signup";
     private final Logger log= LogManager.getLogger();
+    @FindBy(name = "name")
+    private WebElement signUpNameTxtBox;
+
+    @FindBy(xpath = "//form[@action='/signup']//input[@name='email']")
+    private WebElement signUpEmailTxtBox;
+
+    @FindBy(xpath = "//*[text()='Signup']") private WebElement signUpBtn;
+
 
     @FindBy(name = "email")
-    private WebElement userNameTextBox;
+    private WebElement emailTextBox;
 
     @FindBy(name = "password")
     private WebElement passwordTextBox;
@@ -44,8 +51,8 @@ public class LogInPage {
     }
 
 
-    public void enterUserName(String username) {
-        userNameTextBox.sendKeys(username);
+    public void enterEmail(String email) {
+        emailTextBox.sendKeys(email);
 
     }
 
@@ -61,13 +68,14 @@ public class LogInPage {
         Assert.assertEquals(errorMsg.getText(),"Your email or password is incorrect!",errorMsg.getText()+" not displayed");
     }
 
-
-  /*  public void enterAccountDetailsNclickonCreateAccountBtn() {
-        System.out.println("==================printing label names============");
-        for (WebElement label : labels) {
-            //  System.out.println(label.getText());
-        }
-    }*/
+    public void enterSignUpName_EmailTxtBox(String name,String email){
+        System.out.println("==============enterSignUpName_EmailTxtBox==========");
+        System.out.println(name);
+        System.out.println(email);
+        signUpNameTxtBox.sendKeys(name);
+        signUpEmailTxtBox.sendKeys(email);
+        signUpBtn.click();
+    }
 
 
 }
